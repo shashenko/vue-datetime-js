@@ -4,6 +4,7 @@
 import jmoment from 'moment-jalaali'
 import imoment from 'moment-hijri'
 
+import ru from './moment.locale.ru'
 import fa from './moment.locale.fa'
 import fr from './moment.locale.fr'
 import ka from './moment.locale.ka'
@@ -13,6 +14,7 @@ import utils from './utils'
 //   weekdaysMin: 'S_M_T_W_T_F_S'.split('_')
 // })
 
+jmoment.updateLocale('ru', ru)
 jmoment.updateLocale('fa', fa)
 jmoment.updateLocale('fr', fr)
 jmoment.updateLocale('ka', ka)
@@ -52,6 +54,19 @@ const localMethods = {
   }
 }
 const localesConfig = {
+  ru: {
+    dow: 0,
+    dir: 'ltr',
+    displayFormat: 'DD-MM-YYY',
+    lang: {
+      label: '',
+      submit: 'Выбрать',
+      cancel: 'Отменить',
+      now: 'Сейчас',
+      nextMonth: 'След.',
+      prevMonth: 'Пред.'
+    }
+  },
   jalali: {
     dow: 6,
     dir: 'rtl',
@@ -70,7 +85,7 @@ const localesConfig = {
     dir: 'ltr',
     displayFormat: null,
     lang: {
-      label: 'میلادی',
+      label: '',
       submit: 'Select',
       cancel: 'Cancel',
       now: 'Now',

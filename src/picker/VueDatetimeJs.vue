@@ -144,7 +144,9 @@
                       @click="goStep('m')"
                     >
                       <span :style="{ 'border-color': color, color: color }">{{
-                        date.xFormat((calendar === 'hijri') ? 'iMMMM iYYYY' : 'jMMMM jYYYY')
+                        date.xFormat(
+                          calendar === 'hijri' ? 'iMMMM iYYYY' : 'jMMMM jYYYY'
+                        )
                       }}</span>
                     </div>
                   </transition>
@@ -234,7 +236,9 @@
                       :disabled="year.disabled"
                       @click="selectYear(year)"
                     >
-                      {{ year.xFormat((calendar === 'hijri') ? 'iYYYY' : 'jYYYY') }}
+                      {{
+                        year.xFormat(calendar === 'hijri' ? 'iYYYY' : 'jYYYY')
+                      }}
                     </div>
                   </div>
                 </div>
@@ -268,7 +272,11 @@
                       ]"
                       @click="selectMonth(monthItem)"
                     >
-                      {{ monthItem.xFormat((calendar === 'hijri') ? 'iMMMM' : 'jMMMM') }}
+                      {{
+                        monthItem.xFormat(
+                          calendar === 'hijri' ? 'iMMMM' : 'jMMMM'
+                        )
+                      }}
                     </div>
                   </div>
                 </div>
@@ -377,8 +385,7 @@
                   v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
                   :class="[prefix('close-addon')]"
                   @click="goStep('d')"
-                  >x</span
-                >
+                />
               </transition>
 
               <br v-if="autoSubmit && !hasStep('t')" />
@@ -699,10 +706,10 @@ export default {
      * @type String
      * @default en
      * @example en
-     * @supported fa,en,fr,ar-sa
+     * @supported ru,fa,en,fr,ar-sa
      * @version 2.0.0
      */
-    locale: { type: String, default: 'en' },
+    locale: { type: String, default: 'ru' },
 
     /**
      * Calendar type (gregory, jalali, hijri)
@@ -736,7 +743,10 @@ export default {
      *  en: { ... }
      * }
      */
-    localeConfig: { type: Object, default: () => ({}) },
+    localeConfig: {
+      type: Object,
+      default: () => ({})
+    },
 
     /**
      * Timezone configuration
@@ -777,7 +787,7 @@ export default {
       maxDate: false,
       output: '',
       updateNowInterval: null,
-      locales: ['en'],
+      locales: ['ru', 'en'],
       localeData: coreModule.locale
     }
   },
@@ -807,9 +817,12 @@ export default {
     formattedDate() {
       let format = ''
 
-      if (this.hasStep('y')) format = (this.calendar === 'hijri') ? 'iYYYY' : 'jYYYY'
-      if (this.hasStep('m')) format += (this.calendar === 'hijri') ? 'iMMMM ' : 'jMMMM '
-      if (this.hasStep('d')) format = (this.calendar === 'hijri') ? 'ddd iDD iMMMM' : 'ddd jDD jMMMM'
+      if (this.hasStep('y'))
+        format = this.calendar === 'hijri' ? 'iYYYY' : 'jYYYY'
+      if (this.hasStep('m'))
+        format += this.calendar === 'hijri' ? 'iMMMM ' : 'jMMMM '
+      if (this.hasStep('d'))
+        format = this.calendar === 'hijri' ? 'ddd iDD iMMMM' : 'ddd jDD jMMMM'
       if (this.hasStep('t')) format += ' HH:mm '
 
       return format ? this.selectedDate.xFormat(format) : ''
@@ -869,10 +882,16 @@ export default {
       let moment = this.core.moment
       let min = this.minDate
         ? this.minDate.xYear()
-        : moment((this.calendar === 'hijri') ? '1340' : '1300', (this.calendar === 'hijri') ? 'iYYYY' : 'jYYYY').xYear()
+        : moment(
+            this.calendar === 'hijri' ? '1340' : '1300',
+            this.calendar === 'hijri' ? 'iYYYY' : 'jYYYY'
+          ).xYear()
       let max = this.maxDate
         ? this.maxDate.xYear()
-        : moment((this.calendar === 'hijri') ? '1472' : '1430', (this.calendar === 'hijri') ? 'iYYYY' : 'jYYYY').xYear()
+        : moment(
+            this.calendar === 'hijri' ? '1472' : '1430',
+            this.calendar === 'hijri' ? 'iYYYY' : 'jYYYY'
+          ).xYear()
       let cy = this.date.xYear()
       return this.core
         .getYearsList(min, max)
@@ -988,19 +1007,44 @@ export default {
             format = 'HH:mm'
             break
           case 'datetime':
-            format = (this.calendar === 'hijri') ? 'iYYYY/iMM/iDD HH:mm' : (this.calendar === 'jalali') ? 'jYYYY/jMM/jDD HH:mm' : 'YYYY/MM/DD HH:mm'
+            format =
+              this.calendar === 'hijri'
+                ? 'iYYYY/iMM/iDD HH:mm'
+                : this.calendar === 'jalali'
+                ? 'jYYYY/jMM/jDD HH:mm'
+                : 'YYYY/MM/DD HH:mm'
             break
           case 'date':
-            format = (this.calendar === 'hijri') ? 'iYYYY/iMM/iDD' : (this.calendar === 'jalali') ? 'jYYYY/jMM/jDD' : 'YYYY/MM/DD'
+            format =
+              this.calendar === 'hijri'
+                ? 'iYYYY/iMM/iDD'
+                : this.calendar === 'jalali'
+                ? 'jYYYY/jMM/jDD'
+                : 'YYYY/MM/DD'
             break
           case 'year':
-            format = (this.calendar === 'hijri') ? 'iYYYY' : (this.calendar === 'jalali') ? 'jYYYY' : 'YYYY'
+            format =
+              this.calendar === 'hijri'
+                ? 'iYYYY'
+                : this.calendar === 'jalali'
+                ? 'jYYYY'
+                : 'YYYY'
             break
           case 'month':
-            format = (this.calendar === 'hijri') ? 'iMM' : (this.calendar === 'jalali') ? 'jMM' : 'MM'
+            format =
+              this.calendar === 'hijri'
+                ? 'iMM'
+                : this.calendar === 'jalali'
+                ? 'jMM'
+                : 'MM'
             break
           case 'year-month':
-            format = (this.calendar === 'hijri') ? 'iYYYY/iMM' : (this.calendar === 'jalali') ? 'jYYYY/jMM' : 'YYYY/MM'
+            format =
+              this.calendar === 'hijri'
+                ? 'iYYYY/iMM'
+                : this.calendar === 'jalali'
+                ? 'jYYYY/jMM'
+                : 'YYYY/MM'
             break
         }
       }
@@ -1014,7 +1058,7 @@ export default {
     outputValue() {
       if (!this.output) return ''
       let output = this.output.clone()
-      let format = this.selfFormat;
+      let format = this.selfFormat
       // if (/j\w/.test(format)) {
       //   if (this.calendar === 'jalali') output.locale('fa')
       //   else if (this.calendar === 'hijri') output.locale('ar-sa')
@@ -1029,7 +1073,7 @@ export default {
       let format =
         this.localeData.config.displayFormat ||
         this.displayFormat ||
-        this.selfFormat;
+        this.selfFormat
       // if (/j\w/.test(format)) {
       //   if (this.calendar === 'jalali') output.locale('fa')
       //   else if (this.calendar === 'hijri') output.locale('ar-sa')
@@ -1143,7 +1187,7 @@ export default {
     },
     locale: {
       handler(val) {
-        let allowedLocales = ['fa', 'en', 'fr', 'ka', 'ar-sa']
+        let allowedLocales = ['ru', 'fa', 'en', 'fr', 'ka', 'ar-sa']
         let locales = val
           .toString()
           .split(',')
@@ -1519,13 +1563,21 @@ export default {
         return false
       }
 
-      if (item === 'y') value = this.core.moment(value, (this.calendar === 'hijri') ? 'iYYYY' : 'jYYYY')
+      if (item === 'y')
+        value = this.core.moment(
+          value,
+          this.calendar === 'hijri' ? 'iYYYY' : 'jYYYY'
+        )
       return check(value, value.format(this.selfFormat))
     },
     getHighlights(item, value) {
       let highlight = this.highlight
       if (!highlight || typeof highlight !== 'function') return {}
-      if (item === 'y') value = this.core.moment(value, (this.calendar === 'hijri') ? 'iYYYY' : 'jYYYY')
+      if (item === 'y')
+        value = this.core.moment(
+          value,
+          this.calendar === 'hijri' ? 'iYYYY' : 'jYYYY'
+        )
       return (
         this.applyDevFn(
           highlight,

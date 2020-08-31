@@ -1,11 +1,13 @@
 <template>
   <card title="Gregorian datepicker" version="2.0.0">
+    <date-picker locale="ru" />
+    <br />
     <date-picker locale="en" />
     <br />
     <date-picker locale="en,fa" format="YYYY/M/D" />
     <br />
     <date-picker
-      locale="fa,en"
+      locale="fa,en,ru"
       :locale-config="{
         fa: {
           displayFormat: 'jYYYY/jMM/jDD',
@@ -14,6 +16,10 @@
         en: {
           displayFormat: 'YYYY/MM/DD',
           lang: { label: 'Gregorian' }
+        },
+        ru: {
+          displayFormat: 'YYYY/MM/DD',
+          lang: { label: 'Test' }
         }
       }"
     />
