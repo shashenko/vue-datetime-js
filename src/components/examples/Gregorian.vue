@@ -1,6 +1,6 @@
 <template>
   <card title="Gregorian datepicker" version="2.0.0">
-    <date-picker locale="ru" />
+    <date-picker locale="ru" calendar="ru" />
     <br />
     <date-picker locale="en" />
     <br />

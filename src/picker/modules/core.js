@@ -55,7 +55,7 @@ const localMethods = {
 }
 const localesConfig = {
   ru: {
-    dow: 0,
+    dow: 6,
     dir: 'ltr',
     displayFormat: 'DD-MM-YYY',
     lang: {

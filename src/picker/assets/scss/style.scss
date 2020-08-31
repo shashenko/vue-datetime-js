@@ -108,8 +108,8 @@
   direction: rtl;
   width: $width;
   background-color: #ffffff;
-  box-shadow: 5px 22px 95px -14px rgba(0, 0, 0, 1);
   cursor: default;
+  overflow: hidden;
 }
 
 .#{$prefix}header {
@@ -261,6 +261,7 @@
     user-select: none;
     outline: none;
     cursor: pointer;
+    line-height: 1;
 
     &[disabled] {
       opacity: 0.3;
@@ -300,7 +301,6 @@
   left: $month-label-height;
   right: $month-label-height;
   overflow: hidden;
-  width: 95px;
   margin-left: auto;
   margin-right: auto;
   line-height: $month-label-height;
@@ -310,7 +310,7 @@
 
   > span {
     display: inline-block;
-    padding: 0 5px;
+    padding: 0 10px;
     line-height: 26px;
     height: 26px;
     border-width: 1px;
@@ -373,6 +373,7 @@
   cursor: pointer;
   float: right;
   border: solid 4px #fff;
+  box-sizing: border-box;
 
   &.selected, &:hover {
     background-color: #f9f9f9;
@@ -396,7 +397,7 @@
   direction: ltr;
 
   &.can-close {
-    padding-top: 30px;
+    padding-top: 37px;
   }
 }
 
@@ -552,10 +553,6 @@
     position: static;
     transform: none;
   }
-
-  .#{$prefix}content {
-    box-shadow: 0 0 1px -1px black;
-  }
 }
 
 .#{$prefix}no-footer {
@@ -612,10 +609,6 @@
   .#{$prefix}actions {
     text-align: left;
     font-family: sans-serif;
-  }
-
-  .#{$prefix}month-label {
-    font-size: 90%
   }
 
   .#{$prefix}addon-list-item,

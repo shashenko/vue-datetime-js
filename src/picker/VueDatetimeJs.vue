@@ -709,7 +709,7 @@ export default {
      * @supported ru,fa,en,fr,ar-sa
      * @version 2.0.0
      */
-    locale: { type: String, default: 'ru' },
+    locale: { type: String, default: 'en' },
 
     /**
      * Calendar type (gregory, jalali, hijri)
