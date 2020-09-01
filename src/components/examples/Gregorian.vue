@@ -27,6 +27,9 @@
     <template slot="code">
       <!-- eslint-disable -->
       <highlight-code lang="html" v-pre>
+        &lt;date-picker calendar="ru" locale="ru" /&gt;
+      </highlight-code>
+      <highlight-code lang="html" v-pre>
         &lt;date-picker locale="en" /&gt;
       </highlight-code>
       <highlight-code lang="html" v-pre>
